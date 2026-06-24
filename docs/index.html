@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reina — 住在你电脑里的 AI agent</title>
+<meta name="description" content="Reina 是一个本地优先的桌面 AI 编码 agent。它理解你的整个工作区，拆解目标、持续推进，并支持自带模型。">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<meta property="og:title" content="Reina — Desktop AI Agent">
+<meta property="og:description" content="Reads. Plans. Gets it done. 一个住在你电脑里的通用 AI agent。">
+<meta property="og:image" content="assets/app-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- painterly hero backdrop (day only, scrolls away) -->
+<div id="hero-paint" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
+
+<!-- ===== nav ===== -->
+<nav class="nav">
+  <a class="brand" href="#top" aria-label="Reina">
+    <img src="assets/logo.png" alt="" width="34" height="34">
+    <span class="brand-name">Reina</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Capabilities</a>
+    <a href="#how">How it works</a>
+    <a href="#why">Compare</a>
+  </div>
+  <div class="nav-actions">
+    <button id="theme-toggle" type="button" aria-label="切换日间 / 夜间主题" title="切换日间 / 夜间">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <a class="btn btn-ghost nav-star" id="gh-star" href="https://github.com/7-e1even/Reina-release" target="_blank" rel="noopener" aria-label="Star Reina on GitHub">
+      <svg class="ic gh" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 8.4 22.9c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.5-4-1.5-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7 0-.7 0-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+      <svg class="ic star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.95 5.98 6.6.96-4.77 4.65 1.13 6.57L12 18.6 6.09 20.66l1.13-6.57-4.77-4.65 6.6-.96L12 2.5z"/></svg>
+      <span id="gh-star-count" class="star-count">Star</span>
+    </a>
+    <a class="btn btn-accent nav-dl" id="nav-download" href="https://github.com/7-e1even/Reina-release/releases">
+      Download <span class="sep"></span><span class="dim">macOS · Win</span>
+    </a>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ===== hero ===== -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="badge" data-reveal><span class="dot"></span>Desktop AI Agent</span>
+      <h1 data-reveal style="--d:.06s">Reads.<br>Plans.<br><em>Gets it done.</em></h1>
+      <p class="lede" data-reveal style="--d:.14s">一个住在你电脑里的通用 AI agent。它<strong>理解你的整个工作区</strong>，组织信息、拆解目标，持续把任务推进到完成。</p>
+      <div class="hero-cta" data-reveal style="--d:.22s">
+        <a class="btn btn-accent btn-lg" id="hero-download" href="https://github.com/7-e1even/Reina-release/releases">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>
+          <span id="hero-download-label">Download Reina</span>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/7-e1even/Reina-release" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="ic"><path d="M12 .5A11.5 11.5 0 0 0 8.4 22.9c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.5-4-1.5-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7 0-.7 0-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      <p class="dl-meta" id="dl-meta" data-reveal style="--d:.3s">免费 · Windows & macOS</p>
+    </div>
+
+    <!-- stylised workspace card -->
+    <div class="hero-demo" data-reveal style="--d:.2s">
+      <div class="win">
+        <div class="win-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="win-title">Reina — Workspace</span></div>
+        <div class="win-body">
+          <div class="chip chip-r">理解了 <b>14 个文件</b></div>
+          <div class="bubble user">帮我整理这个项目的待办，并起草下一步。</div>
+          <div class="reply"><span class="ava">R</span><p>已读取本地 <b>14 个文件</b>。整理出 3 项待办，正在推进第一项——<u>重构数据层</u>。</p></div>
+          <div class="chip chip-g">持续推进任务 · 随时接手</div>
+          <div class="status"><span class="spark">✦</span> 正在推进 <b>3 项任务</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== real product screenshot (synara-style) ===== -->
+  <section class="shot-section" data-reveal>
+    <div class="shot-frame">
+      <img src="assets/demo.gif" alt="Reina 实时演示：理解项目并持续推进任务" class="shot" loading="lazy">
+    </div>
+    <p class="shot-cap">真实使用演示 · 理解工作区，持续推进任务</p>
+  </section>
+
+  <!-- ===== stats ===== -->
+  <section class="stats">
+    <div class="stat" data-reveal><span class="big">∞</span><span class="lbl">持久会话，上下文不丢</span></div>
+    <div class="stat" data-reveal style="--d:.06s"><span class="big">BYO</span><span class="lbl">自带模型，自由选择</span></div>
+    <div class="stat" data-reveal style="--d:.12s"><span class="big">100%</span><span class="lbl">桌面原生体验</span></div>
+    <div class="stat" data-reveal style="--d:.18s"><span class="big">Local</span><span class="lbl">默认在本地运行</span></div>
+  </section>
+
+  <!-- ===== security spotlight (positioning) ===== -->
+  <section class="spotlight band" data-reveal>
+    <div class="eyebrow">为安全审计而生</div>
+    <h2>不止写代码，<em>更能做攻防审计</em></h2>
+    <p>多数 AI 助手只做通用编码。Reina 把<strong>安全审计</strong>当一等公民——内置 gadget catalog、自动挖掘利用链、危险命令拦截与路径沙箱。</p>
+    <div class="spot-chips">
+      <span class="chip-stat">内置 <span class="num">394</span> 条 Java 反序列化 gadget catalog</span>
+      <span class="chip-stat"><code>find_java_chains</code> 自动挖掘利用链</span>
+      <span class="chip-stat"><span class="num">5</span> 维能力权限 · 危险命令拦截 · 路径沙箱</span>
+    </div>
+  </section>
+
+  <!-- ===== comparison: Reina × Claude Code ===== -->
+  <section id="why" class="band">
+    <div class="band-head cmp-head" data-reveal>
+      <div class="eyebrow">Reina × Claude Code</div>
+      <h2>同样是 Agent，<em>两种活法</em></h2>
+      <p>Claude Code 是依托 Anthropic 生态的云端终端工具；Reina 跑在<strong>你自己选的模型</strong>上、数据不出本机，并为<strong>安全审计</strong>专门打磨。下面是不带滤镜、可对照源码的硬数据。</p>
+    </div>
+
+    <div class="cmp-cards" data-reveal>
+      <div class="cmp-card">
+        <h3>Claude Code</h3>
+        <p>终端 CLI + IDE 扩展，第一方 Claude 模型驱动，背靠庞大的插件与 GitHub Actions 生态。通用编码 agent。</p>
+        <div class="fit">适合 —— 身处 Anthropic 生态、想要最广工具触达的通用编码。</div>
+      </div>
+      <div class="cmp-card reina">
+        <h3>Reina</h3>
+        <p>原生桌面 Agent，数据 / key / 模型全程留本机，并把<strong>安全审计</strong>做成一等公民。</p>
+        <div class="fit">适合 —— 隐私合规、离线掌控、模型自由，以及攻防 / 代码审计。</div>
+      </div>
+    </div>
+
+    <div class="cmp-label" data-reveal>能力与工程参数</div>
+    <div class="cmp-wrap" data-reveal>
+      <div class="cmp">
+        <div class="h"></div><div class="h c">Claude Code</div><div class="h r">Reina</div>
+        <div class="lab">产品形态</div><div class="cc">终端 CLI + IDE 扩展</div><div class="re">原生多窗口桌面应用</div>
+        <div class="lab">数据去向</div><div class="cc">上传 Anthropic 云（或你的 Bedrock / Vertex）</div><div class="re adv">留在本机，只调用你自己的模型端点</div>
+        <div class="lab">模型 / Provider</div><div class="cc">Claude 家族（Opus / Sonnet / Haiku）</div><div class="re">任意 provider：OpenAI · Anthropic · OpenAI 兼容（DeepSeek/Kimi/本地）· ChatGPT 订阅</div>
+        <div class="lab">多智能体</div><div class="cc">Task 子代 + 自定义 agents</div><div class="re">同步 subtask + 异步 fan-out + DAG 团队模式</div>
+        <div class="lab">提示缓存命中</div><div class="cc">第一方 Anthropic 自动缓存（Claude 限定）</div><div class="re">跨 provider 缓存断点：系统前缀稳定缓存 + 滚动历史断点，把易变 reminder 排在缓存前缀之外以最大化命中；<span class="num">5</span> 分钟 TTL，被拒自动降级</div>
+        <div class="lab">会话与上下文</div><div class="cc">JSONL 会话文件</div><div class="re">持久会话 · 自动压缩 · SQLite 全文检索</div>
+      </div>
+    </div>
+
+    <div class="cmp-label" data-reveal>网络安全 · 从通用到专精</div>
+    <div class="cmp-wrap" data-reveal>
+      <div class="cmp">
+        <div class="h"></div><div class="h c">Claude Code</div><div class="h r">Reina</div>
+        <div class="lab">内置安全 / 审计能力</div><div class="cc">无专用能力，靠通用工具 + 自备 MCP / skill</div><div class="re adv">为安全审计专门构建，内置工具链</div>
+        <div class="lab">Java 反序列化 gadget 库</div><div class="cc">—</div><div class="re adv">内置 <span class="num">394</span> 条 gadget catalog，离线检索</div>
+        <div class="lab">Gadget chain 挖掘</div><div class="cc">—</div><div class="re"><code>find_java_chains</code>：自动挖掘利用链（最多 <span class="num">100</span> 条）</div>
+        <div class="lab">命令风险 / 沙箱</div><div class="cc">命令风险分类 + 权限提示</div><div class="re">危险命令拦截 + 路径沙箱 + 5 维能力权限</div>
+      </div>
+    </div>
+
+    <p class="cmp-note" data-reveal>客观地说：Claude Code 生态更成熟——第一方 Claude、IDE 扩展、GitHub Actions、深厚插件社区，做通用编码触达最广。Reina 不拼生态广度，而是把<strong>数据掌控</strong>与<strong>安全审计</strong>做深做专。表中 Reina 列数据均经自有源码核实；Claude Code 列只取其官方公开口径。</p>
+  </section>
+
+  <!-- ===== capabilities ===== -->
+  <section id="features" class="band">
+    <div class="band-head" data-reveal>
+      <h2>它能为你做什么</h2>
+      <p>围绕你的项目持续工作，而不只是回答一个个孤立的问题。</p>
+    </div>
+    <div class="grid">
+      <article class="card" data-reveal>
+        <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg></span>
+        <h3>Workspace context</h3>
+        <p>围绕你的项目、文件与任务组织连续对话，理解的是整个工作区，而不只是单个文件。</p>
+      </article>
+      <article class="card" data-reveal style="--d:.06s">
+        <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12"/><path d="M13 6l6 6-6 6"/></svg></span>
+        <h3>Keeps tasks moving</h3>
+        <p>不止于回答——它会拆解目标、持续推进，并在你需要时主动建议下一步。</p>
+      </article>
+      <article class="card" data-reveal style="--d:.12s">
+        <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <h3>Persistent sessions</h3>
+        <p>完整保留任务历史，随时暂停、随时继续，无需反复重述上下文。</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="4"/><path d="M11 11l9 9m-4-4l2-2m-5-1l2-2"/></svg></span>
+        <h3>Bring your own model</h3>
+        <p>自由配置你偏好的模型与 API key，不被任何单一厂商锁定。</p>
+      </article>
+      <article class="card" data-reveal style="--d:.06s">
+        <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="9" height="7" rx="1.5"/><rect x="13" y="9" width="8" height="11" rx="1.5"/></svg></span>
+        <h3>Multi-window desktop</h3>
+        <p>聊天 / 工作区 / 设置 各自独立呈现，贴合本地工作流，而非困在浏览器标签里。</p>
+      </article>
+      <article class="card" data-reveal style="--d:.12s">
+        <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="11" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg></span>
+        <h3>Runs on your machine</h3>
+        <p>完全跑在你自己的电脑上，工作区内容默认留在本地，省心、可控。</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== how it works ===== -->
+  <section id="how" class="band">
+    <div class="band-head" data-reveal>
+      <h2>三步开始</h2>
+      <p>几分钟内把 Reina 接入你的项目。</p>
+    </div>
+    <div class="steps">
+      <div class="step" data-reveal><span class="n">01</span><h3>Choose a workspace</h3><p>把 Reina 指向本地的一个项目目录，它将围绕这里展开理解与协作。</p></div>
+      <div class="step" data-reveal style="--d:.08s"><span class="n">02</span><h3>Pick your model</h3><p>在设置里选择你偏好的模型，填入对应的 key，几秒钟就绪。</p></div>
+      <div class="step" data-reveal style="--d:.16s"><span class="n">03</span><h3>Hand off a goal</h3><p>下达一个目标，Reina 持续推进任务，并在你需要时建议下一步。</p></div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="band">
+    <div class="band-head" data-reveal>
+      <h2>常见问题</h2>
+    </div>
+    <div class="faq" data-reveal>
+      <details class="faq-item"><summary>Reina 收费吗？</summary><p>免费。下载即用，使用时填入你自己的模型 API key 即可。</p></details>
+      <details class="faq-item"><summary>我的数据和 API key 会上传到你们服务器吗？</summary><p>不会。工作区内容与 API key 默认都留在本机，Reina 只调用你自己配置的模型端点，不经过我们的服务器。</p></details>
+      <details class="faq-item"><summary>支持哪些模型？</summary><p>任意 provider：OpenAI、Anthropic、OpenAI 兼容端点（DeepSeek / Kimi / 本地模型），以及 ChatGPT 订阅——都用你自己的 key。</p></details>
+      <details class="faq-item"><summary>支持哪些系统？</summary><p>Windows 与 macOS（macOS 为 Apple Silicon 版本）。</p></details>
+      <details class="faq-item"><summary>和 Claude Code / Cursor 有什么不同？</summary><p>本地优先、模型自由，并为安全审计专门打磨——具体差异见上方对比表。</p></details>
+      <details class="faq-item"><summary>Reina 开源吗？</summary><p>不开源，Reina 是闭源的桌面应用。但你的工作区数据与 API key 默认不出本机、不经过我们的服务器。</p></details>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta" data-reveal>
+    <img src="assets/logo.png" alt="" width="56" height="56" class="cta-logo">
+    <h2>把下一个目标交给 Reina</h2>
+    <p>免费 · 本地优先 · 自带模型 · Windows &amp; macOS</p>
+    <a class="btn btn-accent btn-lg" href="https://github.com/7-e1even/Reina-release/releases">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>
+      Download Reina
+    </a>
+  </section>
+
+  <footer class="footer">
+    <div class="f-brand"><img src="assets/logo.png" alt="" width="26" height="26"> Reina</div>
+    <div class="f-meta">
+      <a href="https://github.com/7-e1even/Reina-release" target="_blank" rel="noopener">GitHub</a>
+      <span>Windows · macOS</span>
+      <span>© 2026 7-e1even</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
